@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Timer App</string>
+    <string name="action_settings">Settings</string>
+    <string name="Start">Start</string>
+    <string name="Pause">Pause</string>
+    <string name="Reset">Reset</string>
+    <string name="timerVal">0:00:000</string>
+
+</resources>
