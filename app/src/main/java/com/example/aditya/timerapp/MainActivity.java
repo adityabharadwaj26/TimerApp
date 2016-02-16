@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
     int progressStatus = 0;
-    private volatile boolean stopped = false;
+    private boolean stopped = false;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 startTime = SystemClock.uptimeMillis();
+                stopped = false;
                 customHandler.postDelayed(updateTimerThread, 0);
             }
         });
@@ -69,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 timeSwapBuff = 0;
                 timerValue.setText("00:00:000");
+                stopped = false;
                 progress.setProgress(0);
                 customHandler.removeCallbacks(updateTimerThread);
             }
@@ -95,30 +97,33 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             //long totalMilliseconds = 1500000;
-            while (!stopped){
-            long totalMilliseconds = 15000;
-            updatedTime = totalMilliseconds - SystemClock.currentThreadTimeMillis();
-            int secs = (int) (updatedTime / 1000);
-            int mins = secs / 60;
-            int hour = mins / 60;
-            secs = secs % 60;
-            int milliseconds = (int) (updatedTime % 1000);
-            progressStatus = (int) (totalMilliseconds - updatedTime);
-            if (milliseconds == 0 && secs == 0 && mins == 0) {
-                //Toast.makeText(new MainActivity(), "Void Stop call",Toast.LENGTH_LONG).show();
-                //stopRun();
-                stopped = true;
-            }
+            //while (!stopped){
+                long totalMilliseconds = 15000;
+                updatedTime = totalMilliseconds - SystemClock.currentThreadTimeMillis();
+                int secs = (int) (updatedTime / 1000);
+                int mins = secs / 60;
+                int hour = mins / 60;
+                secs = secs % 60;
+                int milliseconds = (int) (updatedTime % 1000);
+                progressStatus = (int) (totalMilliseconds - updatedTime);
 
-            timerValue.setText(String.format("%02d", hour) + ":" + String.format("%02d", mins) + ":"
-                    + String.format("%02d", secs) + ":"
-                    + String.format("%03d", milliseconds));
+                //while(stopped == false) {
+                    timerValue.setText(String.format("%02d", hour) + ":" + String.format("%02d", mins) + ":"
+                            + String.format("%02d", secs) + ":"
+                            + String.format("%03d", milliseconds));
+                //}
 
-            progress.setMax((int) totalMilliseconds);
-            progress.setProgress(progressStatus);
-            customHandler.postDelayed(this, 0);
+                progress.setMax((int) totalMilliseconds);
+                progress.setProgress(progressStatus);
+                customHandler.postDelayed(this, 0);
+                if (updatedTime == 0) {
+                    //Toast.makeText(new MainActivity(), "Void Stop call",Toast.LENGTH_LONG).show();
+                    //stopRun();
+                    stopped = true;
+                } else
+                    stopped = false;
             }
-        }
+        //}
     };
 
     public void stop() {
