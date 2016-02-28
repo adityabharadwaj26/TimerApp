@@ -1,29 +1,16 @@
 package com.example.aditya.timerapp;
 
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-
-import java.util.EventListener;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,40 +26,34 @@ public class MainActivity extends AppCompatActivity {
     long updatedTime = 0L;
     int progressStatus = 0;
     private boolean stopped = false;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        final CountDown timer = new CountDown();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         timerValue = (TextView) findViewById(R.id.timerVal);
         startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                startTime = SystemClock.uptimeMillis();
-                stopped = false;
-                customHandler.postDelayed(updateTimerThread, 0);
+            timer.start();
             }
         });
         pauseButton = (Button) findViewById(R.id.stopButton);
         pauseButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                timeSwapBuff += timeInMilliseconds;
-                customHandler.removeCallbacks(updateTimerThread);
+                try {
+                    timer.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         });
         resetButton = (Button) findViewById(R.id.resetButton);
         resetButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                timeSwapBuff = 0;
-                timerValue.setText("00:00:000");
-                stopped = false;
-                progress.setProgress(0);
-                customHandler.removeCallbacks(updateTimerThread);
+                timer.cancel();
             }
         });
         progress = (ProgressBar) findViewById(R.id.progressBar);
