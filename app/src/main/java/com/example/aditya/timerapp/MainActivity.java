@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
     int progressStatus = 0;
+    int maxTime = 1200000;
     private Ringtone ring;
 
 
@@ -60,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
                         + String.format("%02d", secs) + ":"
                         + String.format("%03d", milliseconds));
                 customHandler.removeCallbacks(updateTimerThread);
-                stopTimer();
+                if (updatedTime == maxTime) {
+                    stopTimer();
+                }
 
             }
         });
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-            int maxTime = 1200000;
+
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
 
