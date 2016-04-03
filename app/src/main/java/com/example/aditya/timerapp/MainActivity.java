@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     int progressStatus = 0;
     int maxTime = 1200000;
     private Ringtone ring;
-
+    boolean pause = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,19 +32,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         timerValue = (TextView) findViewById(R.id.timerVal);
-        Button startButton = (Button) findViewById(R.id.startButton);
+        final Button startButton = (Button) findViewById(R.id.startButton);
         startButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                startTime = SystemClock.uptimeMillis();
-                customHandler.postDelayed(updateTimerThread, 0);
-
-            }
-        });
-        Button pauseButton = (Button) findViewById(R.id.pauseButton);
-        pauseButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                timeSwapBuff += timeInMilliseconds;
-                customHandler.removeCallbacks(updateTimerThread);
+                if (pause == false) {
+                    startTime = SystemClock.uptimeMillis();
+                    customHandler.postDelayed(updateTimerThread, 0);
+                    startButton.setText(R.string.Pause);
+                    pause = true;
+                } else{
+                    timeSwapBuff += timeInMilliseconds;
+                    customHandler.removeCallbacks(updateTimerThread);
+                    startButton.setText(R.string.Start);
+                    pause = false;
+                }
             }
         });
         Button resetButton = (Button) findViewById(R.id.resetButton);
@@ -64,16 +65,13 @@ public class MainActivity extends AppCompatActivity {
                 if (updatedTime == maxTime) {
                     stopTimer();
                 }
-
             }
         });
         progress = (ProgressBar) findViewById(R.id.progressBar);
     }
     private Runnable updateTimerThread = new Runnable() {
-
         @Override
         public void run() {
-
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
             updatedTime = timeSwapBuff + timeInMilliseconds;
 
@@ -92,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
-
     public void playTimer(){
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         ring = RingtoneManager.getRingtone(getApplicationContext(), notification);
@@ -104,4 +101,3 @@ public class MainActivity extends AppCompatActivity {
         ring.stop();
     }
 }
-
