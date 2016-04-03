@@ -10,31 +10,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.example.aditya.timerapp.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/activity_main"
+    android:gravity="center_horizontal">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Start"
         android:id="@+id/startButton"
-        android:onClick="startTimer"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="61dp"
-        android:layout_marginStart="61dp" />
+        android:layout_alignTop="@+id/pauseButton"
+        android:layout_toLeftOf="@+id/timerVal"
+        android:layout_toStartOf="@+id/timerVal"
+        android:gravity="fill_vertical|center_horizontal" />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Pause"
-        android:id="@+id/stopButton"
-        android:onClick="startTimer"
-        android:layout_alignBaseline="@+id/startButton"
-        android:layout_alignBottom="@+id/startButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="45dp"
-        android:layout_marginEnd="45dp" />
+        android:id="@+id/pauseButton"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="fill_vertical|center_horizontal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -52,8 +48,10 @@
         android:layout_height="wrap_content"
         android:text="@string/Reset"
         android:id="@+id/resetButton"
-        android:layout_below="@+id/startButton"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/pauseButton"
+        android:layout_toRightOf="@+id/timerVal"
+        android:layout_toEndOf="@+id/timerVal"
+        android:gravity="fill_vertical|center_horizontal" />
 
     <ProgressBar
         style="?android:attr/progressBarStyleHorizontal"
@@ -63,7 +61,8 @@
         android:layout_above="@+id/timerVal"
         android:layout_alignLeft="@+id/startButton"
         android:layout_alignStart="@+id/startButton"
+        android:layout_alignEnd="@+id/resetButton"
+        android:layout_alignRight="@+id/resetButton"
         android:layout_marginBottom="45dp"
-        android:layout_alignRight="@+id/stopButton"
-        android:layout_alignEnd="@+id/stopButton" />
+        />
 </RelativeLayout>

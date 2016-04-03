@@ -4,6 +4,7 @@
     <string name="Start">Start</string>
     <string name="Pause">Pause</string>
     <string name="Reset">Reset</string>
+    <string name="Stop">Stop</string>
     <string name="timerVal">0:00:000</string>
 
 </resources>
