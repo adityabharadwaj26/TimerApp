@@ -9,9 +9,11 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.example.aditya.timerapp.MainActivity"
+    tools:context="in.blogspot.understandingthecode.myapplication.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,4 +55,14 @@
         android:layout_marginTop="75dp"
         android:layout_alignRight="@+id/resetButton"
         android:layout_alignEnd="@+id/resetButton" />
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id">
+    </com.google.android.gms.ads.AdView>
+
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.example.aditya.timerapp;
+package com.example.aditya.pomodorroClocl;
 
 import org.junit.Test;
 
